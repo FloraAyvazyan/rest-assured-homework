@@ -41,10 +41,10 @@ public class BooksApiTest {
 //2
 
         for(int i = 0; i < 2; i++){
-            String firstBookISBN = books.get(i).get(Constants.ISBN).toString();
-            String firstBookAuthor = books.get(i).get(Constants.AUTHOR).toString();
+            String BookISBN = books.get(i).get(Constants.ISBN).toString();
+            String BookAuthor = books.get(i).get(Constants.AUTHOR).toString();
             booksSteps.
-                    validateBookDetails(firstBookISBN, firstBookAuthor);
+                    validateBookDetails(BookISBN, BookAuthor);
 
         }
 
