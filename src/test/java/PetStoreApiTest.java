@@ -16,6 +16,9 @@ public class PetStoreApiTest {
         RestAssured.baseURI = Constants.PET_STORE_BASE_URL;
     }
 
+    //6. Send a POST request to `https://petstore.swagger.io/v2/store/order` with a JSON body.
+    //
+    //   - Validate that the response contains all necessary information.
     @Test
     public void postRequest() {
         String requestBody = petStoreSteps.createRequestBody();
@@ -36,6 +39,13 @@ public class PetStoreApiTest {
     }
 
 
+    //7. Send a (form) POST request to `https://petstore.swagger.io/v2/pet/{petId}` with `petId`, `name` & `status` parameters.
+    //
+    //   - Validate that the response JSON has `code`, `type`, and `message`.
+    //
+    //8. Send another request and try to cause a `404 error`.
+    //
+    //   - Validate that the response has "code": 404.
     //აქაც გაერთიანებული მაქვს 7-8 ტესტები
     @Test
     public void test7() {
@@ -60,6 +70,11 @@ public class PetStoreApiTest {
 
     }
 
+    //9. Send a GET request to petstore `/user/login` resource with query parameters `username` & `password`.
+    //
+    //   - Ensure that the response status code is `200` (OK).
+    //   - Validate that the message contains `10 significant numbers`.
+    //   - Extract that number and print it.
     @Test
     public void loginTest(){
         Response response = petStoreSteps.login(Constants.USERNAME, Constants.PASSWORD);

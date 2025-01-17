@@ -13,6 +13,11 @@ public class OpenLibraryApiTest {
         RestAssured.baseURI = Constants.OPEN_LIBRARY_BASE_URL;
 
     }
+    //10. Send a real-world GET request to `https://openlibrary.org/search.json?q={keyword}` where the `q` parameter `{keyword}` is `Harry Potter`.
+    //
+    //    - Validate that the response contains books.
+    //    - Ensure that the first book in the `docs` section has the title "Harry Potter and the Philosopher's Stone" and the `author_name` is "J. K. Rowling".
+    //    - Validate that the first book's `place` array contains ("England", "Hogwarts School of Witchcraft and Wizardry", "Platform Nine and Three-quarters").
     @Test
     public void testCase() {
         Response response = openLibrarySteps.getBooksByKeyword(Constants.HARRY_POTTER);
