@@ -1,4 +1,4 @@
-package steps;
+package steps.basicHomework;
 
 import data.Constants;
 import io.restassured.RestAssured;
@@ -104,7 +104,7 @@ public class PetStoreSteps {
                 .formParams("petId", Index,
                         "name", "Boody",
                         "status", "unapproved")
-                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
                 .when()
                 .post("/pet/{petId}", Index);
     }

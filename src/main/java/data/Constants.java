@@ -6,6 +6,8 @@ public class Constants {
             PET_STORE_BASE_URL = "https://petstore.swagger.io/v2",
             BASE_PATH = "/BookStore/v1/Books",
             OPEN_LIBRARY_BASE_URL = "https://openlibrary.org",
+            HEROKU_APP_BASE_URL = "https://restful-booker.herokuapp.com",
+            JPG_URL = "src/main/resources/dog.jpg",
 
     ASSERTION_MESSAGE = "Not enough books in the response",
             USER_NOT_AUTHORIZED_MESSAGE = "User not authorized!",
@@ -33,10 +35,29 @@ public class Constants {
             AUTHOR = "author",
             MESSAGE = "message",
 
-    QUANTITY_MATCHER = "2025-01-18T15:30:00.000+0000";
+    QUANTITY_MATCHER = "2025-01-18T15:30:00.000+0000",
+
+
+    NAME = "Flora",
+            SURNAME = "Ayvazyan",
+            CHECK_IN = "2025-04-12",
+            CHECKOUT = "2024-09-24",
+            ADDITIONAL_LEEDS = "lunch",
+            TOKEN_USERNAME = "admin",
+            TOKEN_PASSWORD = "password123",
+            RICHARD_SILVERMAN = "Richard E. Silverman",
+            ADDY_OSMANI = "Addy Osmani",
+            UPDATED_ANIMAL_NAME = "diddy",
+            UPDATED_ANIMAL_STATUS = "sold",
+            AVAILABLE_STATUS = "available",
+            PICTURE_DATA = "Uploading test picture";
 
 
     public static final int
             EXCEPTED_NUMBERS = 10,
-            OK_STATUS_CODE = 200;
+            OK_STATUS_CODE = 200,
+            TOTAL_PRICE = 5000,
+            BOOKS_PAGE = 1000,
+            ID = 4000,
+            UPDATED_PET_ID = 8000;
 }
