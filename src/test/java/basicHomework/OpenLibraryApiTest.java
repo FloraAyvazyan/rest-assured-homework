@@ -1,9 +1,11 @@
+package basicHomework;
+
 import data.Constants;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import steps.OpenLibrarySteps;
+import steps.basicHomework.OpenLibrarySteps;
 
 public class OpenLibraryApiTest {
     OpenLibrarySteps openLibrarySteps = new OpenLibrarySteps();

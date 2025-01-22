@@ -1,10 +1,12 @@
+package basicHomework;
+
 import data.Constants;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import steps.PetStoreSteps;
+import steps.basicHomework.PetStoreSteps;
 
 import static org.hamcrest.Matchers.notNullValue;
 

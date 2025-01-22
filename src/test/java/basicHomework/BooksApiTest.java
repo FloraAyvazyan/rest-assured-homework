@@ -1,3 +1,5 @@
+package basicHomework;
+
 import DataProvider.DataProviderClass;
 import data.Constants;
 import io.restassured.RestAssured;
@@ -5,7 +7,7 @@ import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import steps.BooksSteps;
+import steps.basicHomework.BooksSteps;
 import java.util.List;
 import java.util.Map;
 import static org.hamcrest.MatcherAssert.assertThat;

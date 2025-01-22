@@ -1,4 +1,4 @@
-package steps;
+package steps.basicHomework;
 
 import data.Constants;
 import io.restassured.RestAssured;
