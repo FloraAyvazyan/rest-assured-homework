@@ -4,6 +4,7 @@ import data.Constants;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import models.BookStore.BooksResponse;
 import org.testng.Assert;
 
 public class BooksSteps {
@@ -34,7 +35,7 @@ public class BooksSteps {
     }
 
     public Response getBookByIsbn(String isbn) {
-       return RestAssured
+        return RestAssured
                 .given()
                 .log().all()
                 .when()
@@ -57,6 +58,16 @@ public class BooksSteps {
         Assert.assertNotNull(bookResponse.jsonPath().getString("publish_date"), Constants.PUBLISH_DATA_IS_MISSING);
         Assert.assertNotNull(bookResponse.jsonPath().getInt("pages"), Constants.PAGE_INFORMATION_IS_MISSING_MESSAGE);
         return this;
+    }
+
+    /// //////////////
+    public BooksResponse getBook() {
+        Response response = RestAssured
+                .given()
+                .when()
+                .get("/books");
+
+        return response.as(BooksResponse.class);
     }
 
 

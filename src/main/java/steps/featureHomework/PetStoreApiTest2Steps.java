@@ -2,157 +2,98 @@ package steps.featureHomework;
 
 import com.github.javafaker.Faker;
 import data.Constants;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import models.PetStore.Category;
+import models.PetStore.Pet;
+import models.PetStore.TagsItem;
 import org.hamcrest.Matchers;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.testng.Assert;
-import java.util.LinkedHashMap;
+
+import java.util.List;
+
 import static io.restassured.RestAssured.given;
 
+
 public class PetStoreApiTest2Steps {
-    Faker faker = new Faker();
+    private final Faker faker = new Faker();
+    Category category = new Category();
+    Pet pet = new Pet();
+    TagsItem tagsItem = new TagsItem();
 
-    public JSONObject createPetRequest() {
-        JSONObject category = new JSONObject();
-        category.put("id", Constants.ID);
-        category.put("name", faker.animal().name());
 
-        JSONArray photoUrls = new JSONArray();
-        photoUrls.put("string");
+    public Pet createPetRequest(){
+        pet = new Pet();
+        pet.setId(Constants.ID);
 
-        JSONObject tag = new JSONObject();
-        tag.put("id", Constants.ID);
-        tag.put("name", faker.animal().name());
+        category = new Category();
+        category.setId(Constants.ID);
+        category.setName(faker.animal().name());
+        pet.setCategory(category);
 
-        JSONArray tags = new JSONArray();
-        tags.put(tag);
+        pet.setName(faker.animal().name());
+        pet.setPhotoUrls(List.of("photos"));
 
-        JSONObject pet = new JSONObject();
-        pet.put("id", Constants.ID);
-        pet.put("category", category);
-        pet.put("name", faker.animal().name());
-        pet.put("photoUrls", photoUrls);
-        pet.put("tags", tags);
-        pet.put("status", Constants.AVAILABLE_STATUS);
-
+        tagsItem = new TagsItem();
+        tagsItem.setId(Constants.ID);
+        tagsItem.setName(faker.animal().name());
+        pet.setTags(List.of(tagsItem));
+        pet.setStatus(Constants.AVAILABLE_STATUS);
         return pet;
     }
 
-
-    public Response sendPetRequest(RequestSpecification requestSpec, JSONObject jsonObject) {
+    public Response sendPetRequest(RequestSpecification requestSpec, Pet pet) {
         return given(requestSpec)
-                .body(jsonObject.toString())
-                .when()
+                .body(pet)
                 .post("/pet");
     }
 
     public PetStoreApiTest2Steps validateStatusCode(Response response) {
-        response
-                .then()
-                .assertThat()
-                .statusCode(Constants.OK_STATUS_CODE);
+        response.then().statusCode(Constants.OK_STATUS_CODE);
         return this;
     }
 
-    public PetStoreApiTest2Steps validatePetId(Response response, JSONObject petJson) {
-        response
-                .then()
-                .assertThat()
-                .body("id", Matchers.is(petJson.get("id")));
+    public PetStoreApiTest2Steps validatePetId(Response response, Pet pet) {
+        response.then()
+                .body("id", Matchers.is((int) pet.getId()));
         return this;
     }
+    public PetStoreApiTest2Steps validatePetName(Response response, Pet pet) {
+        response.then()
+                .body("name", Matchers.is(pet.getName()));
 
-    public PetStoreApiTest2Steps validatePetName(Response response, JSONObject petJson) {
-        response
-                .then()
-                .assertThat()
-                .body("name", Matchers.is(petJson.get("name")));
         return this;
     }
-
-    public PetStoreApiTest2Steps validatePetStatus(Response response, JSONObject petJson) {
-        response
-                .then()
-                .assertThat()
-                .body("status", Matchers.is(petJson.get("status")));
+    public PetStoreApiTest2Steps validatePetStatus(Response response, Pet pet) {
+        response.then()
+                .body("status", Matchers.is(pet.getStatus()));
         return this;
     }
 
     public Response findPets(RequestSpecification requestSpec) {
         return given(requestSpec)
                 .queryParam("status", Constants.AVAILABLE_STATUS)
-                .when()
                 .get("/pet/findByStatus");
     }
 
-    public PetStoreApiTest2Steps responseArrayContainsID(Response response) {
-        response
-                .then()
-                .body("id", Matchers.hasItem(Constants.ID));
+    public Pet extractPet(Response response) {
+        return response.jsonPath().getObject("find { it.id == 4000 }", Pet.class);
+    }
+
+    public PetStoreApiTest2Steps validateExtractedPetId(Pet extractedPet, Pet originalPet) {
+        Assert.assertEquals(extractedPet.getId(), originalPet.getId());
         return this;
     }
 
-    public JSONObject extractPetObject(Response response) {
-        LinkedHashMap<String, Object> petMap = response
-                .jsonPath()
-                .getJsonObject("find { it.id == 4000 }");
-        return new JSONObject(petMap);
-    }
-
-
-    public PetStoreApiTest2Steps extractedPetIdValidation(JSONObject petObject, JSONObject requestBody) {
-        Assert.assertEquals(petObject.getLong("id"), requestBody.getLong("id"));
+    public PetStoreApiTest2Steps validateExtractedPetName(Pet extractedPet, Pet originalPet) {
+        Assert.assertEquals(extractedPet.getName(), originalPet.getName());
         return this;
     }
 
-    public PetStoreApiTest2Steps extractedPetNameValidation(JSONObject petObject, JSONObject requestBody) {
-        Assert.assertEquals(petObject.getString("name"), requestBody.getString("name"));
+    public PetStoreApiTest2Steps validateExtractedPetStatus(Pet extractedPet, Pet originalPet) {
+        Assert.assertEquals(extractedPet.getStatus(), originalPet.getStatus());
         return this;
     }
-
-    public PetStoreApiTest2Steps extractedPetStatusValidation(JSONObject petObject, JSONObject requestBody) {
-        Assert.assertEquals(petObject.getString("status"), requestBody.getString("status"));
-        return this;
-    }
-
-
-    public Response updatePet(int petId) {
-        String requestBody = String.format("{\"id\": %d, \"name\": \"%s\", \"status\": \"%s\"}",
-                petId, Constants.UPDATED_ANIMAL_NAME, Constants.UPDATED_ANIMAL_STATUS);
-
-        Response response = RestAssured.given()
-                .contentType(ContentType.JSON)
-                .body(requestBody)
-                .put("/pet");
-
-        response.then().statusCode(Constants.OK_STATUS_CODE);
-        return response;
-    }
-
-
-    public PetStoreApiTest2Steps validatePetName(Response response){
-        response
-                .then()
-                .assertThat()
-                .body("name", Matchers.is(Constants.UPDATED_ANIMAL_NAME));
-        return this;
-    }
-
-
-    public PetStoreApiTest2Steps validatePetStatus(Response response){
-        response
-                .then()
-                .assertThat()
-                .body("status", Matchers.is(Constants.UPDATED_ANIMAL_STATUS));
-        return this;
-    }
-
-
-
 }
 
 

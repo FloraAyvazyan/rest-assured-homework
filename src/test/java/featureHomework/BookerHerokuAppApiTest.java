@@ -8,7 +8,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import org.json.JSONObject;
+import models.BookerHerokuApp.Booking;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import steps.featureHomework.BookingHerokuAppSteps;
@@ -35,12 +35,12 @@ public class BookerHerokuAppApiTest {
     }
 
     @Test
-    public void bookingUpdate(){
-        JSONObject obj = bookingHerokuappSteps.JSONObjectParameterization();
-        String token = bookingHerokuappSteps.getToken();
-        Response response = bookingHerokuappSteps
-                 .BookingUpdate(requestSpec, obj, token);
-        bookingHerokuappSteps.validateLogAndStatusCode(response);
+    public void bookingUpdate() {
+        Booking booking = bookingHerokuappSteps.createBookingPayload();
+        String token = bookingHerokuappSteps.getToken2();
+        Response response = bookingHerokuappSteps.BookingUpdate(requestSpec, booking, token);
+        bookingHerokuappSteps
+                .validateLogAndStatusCode(response);
     }
 }
 
