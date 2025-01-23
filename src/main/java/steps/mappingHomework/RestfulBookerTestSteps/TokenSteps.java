@@ -17,7 +17,9 @@ public class TokenSteps {
                 .post("/auth");
 
         Assert.assertEquals(tokenResponse.getStatusCode(), Constants.OK_STATUS_CODE, Constants.FAILED_TO_CREATE_TOKEN);
+
         token = tokenResponse.jsonPath().getString("token");
+
         Assert.assertNotNull(token, Constants.TOKEN_IS_NULL_MESSAGE);
 
         return token;

@@ -11,10 +11,11 @@ public class BookingSteps {
 
     private int bookingId;
 
-    public int createBooking(String bookingPayload) {
+    public int createBooking(String bookingPayload, String token) {
         Response createBookingResponse = RestAssured
                 .given()
                 .contentType(ContentType.JSON)
+                .header("Cookie", "token=" + token)
                 .body(bookingPayload)
                 .post("/booking");
 

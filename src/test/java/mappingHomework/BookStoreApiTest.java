@@ -22,8 +22,11 @@ public class BookStoreApiTest {
     public void testBooksApi() {
         Response response = bookStoreSteps.getBooksApiResponse();
         bookStoreSteps.assertStatusCode(response);
+        //   - Extract response with (POJO) class
         BooksResponse booksResponse = response.as(BooksResponse.class);
+        //   - Validate that all book pages are less than 1000 pages
         bookStoreSteps.validateBooksPages(booksResponse)
+                //   - Confirm the authors of the last two books match the expected results (using predefined author names for comparison).
                 .validateBookLastBookAuthor(booksResponse)
                 .validateBookSecondLastBookAuthor(booksResponse);
     }
