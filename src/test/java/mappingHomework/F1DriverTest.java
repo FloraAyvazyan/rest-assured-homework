@@ -20,8 +20,10 @@ public class F1DriverTest {
     public void driverTest(){
         Response response = f1DriverTestSteps
                 .getResponse();
+        //   - Deserialize using JsonPath `MRData.DriverTable.Drivers[0]` as `Dirver` (Pojo) object.
         DriversItem extractedDriver = f1DriverTestSteps
                 .extractDriver(response);
+        //   - Compare and confirm that the Dirver object returned by the service matches the one initialized in the Java code using hamcrest.
         f1DriverTestSteps
                 .validateDriverId(extractedDriver)
                 .validatePermanentNumber(extractedDriver)

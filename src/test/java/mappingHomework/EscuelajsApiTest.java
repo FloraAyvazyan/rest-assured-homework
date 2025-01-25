@@ -18,7 +18,6 @@ public class EscuelajsApiTest {
 
     private static String accessToken;
 
-
     @BeforeClass
     public void setup() {
         baseURI = Constants.BASE_URL;
@@ -35,7 +34,9 @@ public class EscuelajsApiTest {
                 "avatar": "https://i.imgur.com/LDOO4Qs.jpg"
             }
         """;
+        //- Create user calling POST `/v1/users`
         userService.createUser(userPayload);
+
 
         String loginPayload = """
             {
@@ -43,8 +44,10 @@ public class EscuelajsApiTest {
                 "password": "changeme"
             }
         """;
+
         accessToken = authService
                 .loginUser(loginPayload);
+
         Assert.assertNotNull(accessToken, Constants.ACCESS_TOKE_SHOULD_NOT_BE_NULL_MESSAGE);
 
         UserProfile userProfile = profileService.getUserProfile(accessToken);

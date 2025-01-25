@@ -40,4 +40,17 @@ public class DataProviderClass {
         };
     }
 
+
+
+
+    @DataProvider(name = "bookingData")
+    public Object[][] createBookingData() {
+        return new Object[][]{
+                {"James", "Brown", 111, true, "2023-01-01", "2024-01-01", "Breakfast", 150, "P12345"},
+                {"Jane", "Doe", 200, false, "2025-01-01", "2025-12-01", "Lunch", 200, null},  // passportNo is null
+                {"Michael", "Smith", 500, true, "2023-06-01", "2023-06-30", "Dinner", 300, "P67890"},
+                {"Sara", "Johnson", 150, false, "2024-03-01", "2024-03-10", "Snacks", 0, null},
+        };
+    }
+
 }
