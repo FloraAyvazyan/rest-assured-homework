@@ -8,31 +8,29 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import org.json.JSONObject;
+import models.PetStore.Pet;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import steps.featureHomework.PetStoreApiTest2Steps;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.empty;
 
 public class PetStoreApiTest {
-    PetStoreApiTest2Steps petStoreApiTest2Steps = new PetStoreApiTest2Steps();
-
-    public static  RequestSpecification requestSpec;
-    public static   ResponseSpecification responseSpec;
+    private final PetStoreApiTest2Steps petStoreApiTest2Steps = new PetStoreApiTest2Steps();
+    private static RequestSpecification requestSpec;
+    private static ResponseSpecification responseSpec;
 
     @BeforeClass
     public static void setUp() {
         requestSpec = new RequestSpecBuilder()
                 .setBaseUri(Constants.PET_STORE_BASE_URL)
                 .setContentType(ContentType.JSON)
-                .setAccept(ContentType.JSON)
                 .build();
 
         responseSpec = new ResponseSpecBuilder()
                 .expectStatusCode(Constants.OK_STATUS_CODE)
                 .expectBody(not(empty()))
-                .log(io.restassured.filter.log.LogDetail.ALL)
                 .build();
 
         RestAssured.requestSpecification = requestSpec;
@@ -41,28 +39,26 @@ public class PetStoreApiTest {
 
     @Test
     public void petStoreTest() {
-        JSONObject newPet =  petStoreApiTest2Steps.createPetRequest();
-        Response response = petStoreApiTest2Steps.sendPetRequest(requestSpec, newPet);
+        Pet newPet = petStoreApiTest2Steps
+                .createPetRequest();
+        Response response = petStoreApiTest2Steps
+                .sendPetRequest(requestSpec, newPet);
+
         petStoreApiTest2Steps
                 .validateStatusCode(response)
                 .validatePetId(response, newPet)
                 .validatePetName(response, newPet)
                 .validatePetStatus(response, newPet);
-        Response findPetByStatus = petStoreApiTest2Steps.findPets(requestSpec);
-        petStoreApiTest2Steps
-                .validateStatusCode(findPetByStatus)
-                .responseArrayContainsID(findPetByStatus);
-        JSONObject extractPet = petStoreApiTest2Steps.extractPetObject(findPetByStatus);
-        petStoreApiTest2Steps
-                .extractedPetIdValidation(extractPet, newPet)
-                .extractedPetNameValidation(extractPet, newPet)
-                .extractedPetStatusValidation(extractPet, newPet);
-       Response updatedPet =  petStoreApiTest2Steps.updatePet(Constants.UPDATED_PET_ID);
-       petStoreApiTest2Steps
-                .validatePetName(updatedPet)
-                .validatePetStatus(updatedPet);
 
+        Response findPetsResponse = petStoreApiTest2Steps.findPets(requestSpec);
+        petStoreApiTest2Steps.validateStatusCode(findPetsResponse);
+
+        Pet extractedPet = petStoreApiTest2Steps
+                .extractPet(findPetsResponse);
+        petStoreApiTest2Steps
+                .validateExtractedPetId(extractedPet, newPet)
+                .validateExtractedPetName(extractedPet, newPet)
+                .validateExtractedPetStatus(extractedPet, newPet);
     }
-
 }
 

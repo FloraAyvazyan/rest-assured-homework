@@ -5,7 +5,12 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import models.BookerHerokuApp.Booking;
+import models.BookerHerokuApp.BookingDates;
 import org.json.JSONObject;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class BookingHerokuAppSteps {
     JSONObject tokenRequest = getTokenRequestData();
@@ -61,6 +66,50 @@ public class BookingHerokuAppSteps {
                 .extract()
                 .statusCode();
     }
+
+    /// ///////////////////
+
+    public Booking createBookingPayload() {
+        BookingDates bookingDates = new BookingDates();
+        bookingDates.setCheckin(Constants.CHECK_IN);
+        bookingDates.setCheckout(Constants.CHECKOUT);
+
+        Booking booking = new Booking();
+        booking.setFirstname(Constants.NAME);
+        booking.setLastname(Constants.SURNAME);
+        booking.setTotalprice(Constants.TOTAL_PRICE);
+        booking.setDepositpaid(false);
+        booking.setBookingdates(bookingDates);
+        booking.setAdditionalneeds(Constants.ADDITIONAL_LEEDS);
+
+        return booking;
+    }
+
+    public String getToken2() {
+        String tokenRequestBody = String.format("{\"username\":\"%s\", \"password\":\"%s\"}",
+                Constants.TOKEN_USERNAME, Constants.TOKEN_PASSWORD);
+
+        Response tokenResponse = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .body(tokenRequestBody)
+                .post(Constants.HEROKU_APP_BASE_URL + "/auth");
+
+        return tokenResponse.jsonPath().getString("token");
+    }
+
+    public Response BookingUpdate(RequestSpecification requestSpec, Booking booking, String token) {
+        return RestAssured
+                .given()
+                .spec(requestSpec)
+                .body(booking)
+                .header("Cookie", "token=" + token)
+                .when()
+                .put("/booking/1");
+    }
+
+
+
 }
 
 

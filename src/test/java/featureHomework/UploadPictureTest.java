@@ -8,13 +8,15 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import models.FileUpload.FileUploadMetadata;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import steps.featureHomework.UpdateImageSteps;
+
 import java.io.File;
+
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.not;
-
 
 public class UploadPictureTest {
     UpdateImageSteps updateImageSteps = new UpdateImageSteps();
@@ -40,19 +42,21 @@ public class UploadPictureTest {
         RestAssured.responseSpecification = responseSpec;
     }
 
-
     @Test
     public void uploadImageTest() {
-
         File dogImage = new File(Constants.JPG_URL);
-        Response updatedPetWithImage = updateImageSteps
-                .UploadImage(dogImage);
+
+        FileUploadMetadata metadata = new FileUploadMetadata();
+        metadata.setAdditionalMetadata(Constants.PICTURE_DATA);
+        metadata.setFileName(dogImage.getName());
+        metadata.setFileLength(dogImage.length());
+
+        Response updatedPetWithImage = updateImageSteps.uploadImage(metadata, dogImage);
+
         updateImageSteps
                 .validatePetStatusCodeWithImage(updatedPetWithImage)
-                .validatePetFileNameWithImage(updatedPetWithImage, dogImage)
-                .validatePetMetaDateWithImage(updatedPetWithImage)
-                .validatePetFileLengthWithImage(updatedPetWithImage, dogImage);
-
+                .validatePetFileNameWithImage(updatedPetWithImage, metadata)
+                .validatePetMetaDateWithImage(updatedPetWithImage, metadata)
+                .validatePetFileLengthWithImage(updatedPetWithImage, metadata);
     }
-
 }
