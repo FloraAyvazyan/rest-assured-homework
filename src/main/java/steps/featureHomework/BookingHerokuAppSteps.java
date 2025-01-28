@@ -9,8 +9,7 @@ import models.BookerHerokuApp.Booking;
 import models.BookerHerokuApp.BookingDates;
 import org.json.JSONObject;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+
 
 public class BookingHerokuAppSteps {
     JSONObject tokenRequest = getTokenRequestData();
@@ -71,8 +70,8 @@ public class BookingHerokuAppSteps {
 
     public Booking createBookingPayload() {
         BookingDates bookingDates = new BookingDates();
-        bookingDates.setCheckin(Constants.CHECK_IN);
-        bookingDates.setCheckout(Constants.CHECKOUT);
+//        bookingDates.setCheckin(Constants.CHECK_IN);
+//        bookingDates.setCheckout(Constants.CHECKOUT);
 
         Booking booking = new Booking();
         booking.setFirstname(Constants.NAME);

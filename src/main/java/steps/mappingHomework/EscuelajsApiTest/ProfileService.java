@@ -16,7 +16,8 @@ public class ProfileService {
                 .then()
                 .statusCode(Constants.OK_STATUS_CODE)
                 .log().all()
-                .extract().response();
+                .extract()
+                .response();
 
         return profileResponse.as(UserProfile.class);
     }

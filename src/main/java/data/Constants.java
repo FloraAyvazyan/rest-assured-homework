@@ -4,12 +4,15 @@ public class Constants {
     public static final String
             BOOKS_BASE_URL = "https://bookstore.toolsqa.com/",
             PET_STORE_BASE_URL = "https://petstore.swagger.io/v2",
+            PET_STORE_URL = "https://petstore3.swagger.io",
             BASE_PATH = "/BookStore/v1/Books",
             OPEN_LIBRARY_BASE_URL = "https://openlibrary.org",
             HEROKU_APP_BASE_URL = "https://restful-booker.herokuapp.com",
             JPG_URL = "src/main/resources/dog.jpg",
             ERGAST_COM_URL = "http://ergast.com/api/f1/2016/drivers.json",
             BASE_URL = "https://api.escuelajs.co/api",
+            PLANET_BASE_URL = "https://swapi.dev/api",
+            URL_STARTS_WITH = "https://",
 
     ASSERTION_MESSAGE = "Not enough books in the response",
             USER_NOT_AUTHORIZED_MESSAGE = "User not authorized!",
@@ -39,6 +42,19 @@ public class Constants {
             FAILED_TO_GET_BOOK_AFTER_UPDATE_MESSAGE = "Failed to get booking after update",
             FIRSTNAME_NO_UPDATED_MESSAGE = "Firstname not updated",
             LASTNAME_NO_UPDATED_MESSAGE = "Lastname not updated",
+            PLANET_NAME_SHOULD_NOT_BE_NULL_MESSAGE = "Planet name should not be null",
+            GRAVITY_DISMATCHED_MESSAGE = "Gravity should match the expected pattern",
+            TERRAIN_IS_NULL_MESSAGE = "Terrain should not be null or empty",
+            RESIDENTS_SHOULD_NOT_BE_EMPTY_MESSAGE = "Residents list should not be empty",
+            URL_SHOULD_BE_VALID_MESSAGE = "URL should be a valid URL",
+            NO_RESIDENTS_AVAILABLE = "No residents available for the this planet: ",
+            INVALID_PET_ID_MESSAGE = "Pet ID should match the expected value",
+            INVALID_QUANTITY_MESSAGE = "Quantity should match the expected value",
+            INVALID_ID_MESSAGE = "ID should match the expected value",
+            SHIP_DATA_SHOULD_NOT_BE_NULL_MESSAGE = "Ship date should not be null",
+            INVALID_SHIP_DATA_MESSAGE = "Ship date should be in the correct format",
+            INVALID_COMPLETE_STATUS_MESSAGE = "Complete status should match the expected value",
+            INVALID_STATUS_MESSAGE = "Status should match the expected value",
 
     HARRY_POTTER = "Harry Potter",
             HARRY_POTTER_AUTHOR = "J. K. Rowling",
@@ -70,6 +86,8 @@ public class Constants {
             UPDATED_ANIMAL_NAME = "diddy",
             UPDATED_ANIMAL_STATUS = "sold",
             AVAILABLE_STATUS = "available",
+            PENDING_STATUS = "pending",
+            SOLD_STATUS = "sold",
             PICTURE_DATA = "Uploading test picture",
             LAST_AUTHOR_NAME = "Nicholas C. Zakas",
             SECOND_LAST_AUTHOR = "Marijn Haverbeke",
@@ -86,8 +104,10 @@ public class Constants {
             FAMILY_NAME = "Alonso",
             DATE_OF_BIRTH = "1981-07-29",
             NATIONALITY = "Spanish",
-            PERMANENT_NUMBER = "14";
+            PERMANENT_NUMBER = "14",
 
+
+    SHIP_DATE = "2024-01-24T18:06:36.528Z";
 
     public static final int
             EXCEPTED_NUMBERS = 10,
